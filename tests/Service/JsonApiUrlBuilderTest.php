@@ -11,7 +11,7 @@ use Webmozart\Assert\InvalidArgumentException;
 final class JsonApiUrlBuilderTest extends TestCase
 {
     /**
-     * @dataProvider baseUrlProvider
+     * @dataProvider validBaseUrlProvider
      * @group base-url
      * @group base-url-is-returned
      * @group base-url-is-set
@@ -23,12 +23,36 @@ final class JsonApiUrlBuilderTest extends TestCase
         self::assertSame($baseUrl, $result);
     }
 
-    public function testAnInvalidUrlThrowsAnInvalidArgumentException(): void
+    /**
+     * @dataProvider invalidBaseUrlProvider
+     * @group base-url
+     * @group base-url-is-empty
+     * @group base-url-is-invalid
+     */
+    public function testAnInvalidUrlThrowsAnInvalidArgumentException(
+        string $baseUrl,
+        string $exceptionMessage
+    ): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectDeprecationMessage('The base URL cannot be blank.');
+        $this->expectDeprecationMessage($exceptionMessage);
 
-        JsonApiUrlBuilder::create('');
+        JsonApiUrlBuilder::create($baseUrl);
+    }
+
+    public function invalidBaseUrlProvider(): \Generator
+    {
+        return [
+            yield 'Empty URL' => [
+                'url' => '',
+                'message' => 'The base URL cannot be blank.',
+            ],
+
+            yield 'An incorrect URL' => [
+                'url' => 'banana',
+                'message' => 'The URL must be in a valid format.',
+            ],
+        ];
     }
 
     public function validBaseUrlProvider(): \Generator

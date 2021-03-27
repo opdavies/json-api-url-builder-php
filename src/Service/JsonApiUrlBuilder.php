@@ -13,6 +13,10 @@ final class JsonApiUrlBuilder
     public static function create(string $baseUrl): self
     {
         Assert::notEmpty($baseUrl, 'The base URL cannot be blank.');
+        Assert::true(
+            (bool) filter_var($baseUrl, FILTER_VALIDATE_URL),
+            'The URL must be in a valid format.'
+        );
 
         return (new self())->setBaseUrl($baseUrl);
     }
