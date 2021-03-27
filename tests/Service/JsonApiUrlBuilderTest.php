@@ -6,6 +6,7 @@ namespace Opdavies\JsonApiUrlBuilder\Tests\Service;
 
 use Opdavies\JsonApiUrlBuilder\Service\JsonApiUrlBuilder;
 use PHPUnit\Framework\TestCase;
+use Webmozart\Assert\InvalidArgumentException;
 
 final class JsonApiUrlBuilderTest extends TestCase
 {
@@ -22,13 +23,22 @@ final class JsonApiUrlBuilderTest extends TestCase
         self::assertSame($baseUrl, $result);
     }
 
-    public function baseUrlProvider(): array
+    public function testAnInvalidUrlThrowsAnInvalidArgumentException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectDeprecationMessage('The base URL cannot be blank.');
+
+        JsonApiUrlBuilder::create('');
+    }
+
+    public function validBaseUrlProvider(): \Generator
     {
           return [
-              'HTTP URL' => [
+              yield 'HTTP URL' => [
                   'baseUrl' => 'http://example.com',
               ],
-              'HTTPS URL' => [
+
+              yield 'HTTPS URL' => [
                   'baseUrl' => 'https://example.com',
               ],
 
