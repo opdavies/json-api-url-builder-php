@@ -1,0 +1,33 @@
+{
+    "name": "opdavies/json-api-url-builder",
+    "description": "A tool for building URLs to retrieve data from a JSON:API in a fluent way.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oliver Davies",
+            "email": "oliver@oliverdavies.uk"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "php": "^7.3 || ^8",
+        "phpunit/phpunit": "^9.5"
+    },
+    "scripts": {
+        "test": "phpunit --colors=always tests"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Opdavies\\JsonApiUrlBuilder\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Opdavies\\JsonApiUrlBuilder\\Tests\\": "tests/"
+        }
+    }
+}

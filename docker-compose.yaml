@@ -1,0 +1,13 @@
+version: '3'
+
+volumes:
+  vendor:
+    driver: local
+
+services:
+  cli:
+    build:
+      context: .
+    volumes:
+      - vendor:/app/vendor
+      - .:/app
